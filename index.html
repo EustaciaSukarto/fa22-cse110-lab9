@@ -7,6 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 9</title>
 
+  <!-- STEP 5 - TrackJS -->
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "c374ead711ff468db7cca7dd0d1edfee"
+    });
+  </script>
+
   <style>
     button {
       margin: 3px;
@@ -102,6 +110,103 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    // STEP 2
+    errorBtns[0].addEventListener('click', function() {
+      console.log('The result is', document.querySelector('output').innerHTML);
+    });
+    errorBtns[1].addEventListener('click', function() {
+      console.error('This is an error notice');
+    });
+    errorBtns[2].addEventListener('click', function() {
+      console.count('console-count');
+    });
+    errorBtns[3].addEventListener('click', function() {
+      console.warn('Ensure that your inputs are valid');
+    });
+    errorBtns[4].addEventListener('click', function() {
+      console.assert(document.querySelector('#first-num').value.match(/^[0-9]*\.?[0-9]*$/), 'The first input is invalid');
+      console.assert(document.querySelector('#second-num').value.match(/^[0-9]*\.?[0-9]*$/), 'The second input is invalid') 
+    });
+    errorBtns[5].addEventListener('click', function() {
+      console.clear();
+    });
+    errorBtns[6].addEventListener('click', function() {
+      console.dir(document.querySelector('form'));
+    });
+    errorBtns[7].addEventListener('click', function() {
+      console.dirxml(document.querySelector('form'));
+    });
+    errorBtns[8].addEventListener('click', function() {
+      console.group();
+    });
+    errorBtns[9].addEventListener('click', function() {
+      console.groupEnd();
+    });
+    errorBtns[10].addEventListener('click', function() {
+      let inputs = [document.getElementById('first-num').value, document.getElementById('second-num').value];
+      console.table(inputs);
+    });
+    errorBtns[11].addEventListener('click', function() {
+      console.time();
+    });
+    errorBtns[12].addEventListener('click', function() {
+      console.timeEnd();
+    });
+    errorBtns[13].addEventListener('click', function() {
+      function getFirstInput() {
+        let inputValues = getInputs();
+        return inputValues[0];
+      }
+      function getInputs() {
+        return getInputValues(document.querySelectorAll('input'));
+      }
+      function getInputValues(inputs) {
+        console.trace();
+        return [inputs[0].value, inputs[1].value];
+      }
+      let in1 = getFirstInput();
+    });
+
+    // STEP 3 & 4
+    document.querySelector('form').addEventListener('submit', function() {
+      class InputValidationError extends Error {
+        constructor(message) {
+          super(message);
+          this.name = "InputValidationError";
+        }
+      }
+      function readInputs() {
+        let inputs = document.querySelectorAll('input');
+        if (inputs[0].value == '') {
+          throw new InputValidationError("Empty first input");
+        }
+        if (inputs[1].value == '') {
+          throw new InputValidationError("Empty second input");
+        }
+        return inputs;
+      }
+      try {
+        let inputs = readInputs();
+      } catch (err) {
+        if (err instanceof InputValidationError) {
+          alert("Invalid input: " + err.message);
+        } else {
+          throw err;
+        }
+      } finally {
+        console.log('Finish validating inputs');
+      }
+    });
+
+    // STEP 5 - window.onerror
+    window.onerror = function (msg, url, lineNo, columnNo, errorObj) {
+      alert('Error Message: ' + msg + '\nUrl: ' + url + '\nLine No.: ' + lineNo
+      + '\nColumn No.: ' + columnNo + '\nErro Object: ' +  errorObj);
+    }
+    // STEP 5 - TrackJS (cont.)
+    TrackJS.track('Testing TrackJS!');
+
   </script>
 </body>
 
