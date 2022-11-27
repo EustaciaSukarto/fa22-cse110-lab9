@@ -200,10 +200,16 @@
     });
 
     // STEP 5 - window.onerror
-    window.onerror = function (msg, url, lineNo, columnNo, errorObj) {
-      alert('Error Message: ' + msg + '\nUrl: ' + url + '\nLine No.: ' + lineNo
-      + '\nColumn No.: ' + columnNo + '\nErro Object: ' +  errorObj);
-    }
+    errorBtns[14].addEventListener('click', function() {
+      let firstNum = document.querySelector('#first-num').value = 'ab';
+      let secondNum = document.querySelector('#second-num').value = '12';
+      let operator = document.querySelector('#operator').value = '+';
+      document.querySelector('output').innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      window.onerror = function (msg, url, lineNo, columnNo, errorObj) {
+        alert('Error Message: ' + msg + '\nUrl: ' + url + '\nLine No.: ' + lineNo
+        + '\nColumn No.: ' + columnNo + '\nErro Object: ' +  errorObj);
+      }
+    });
     // STEP 5 - TrackJS (cont.)
     TrackJS.track('Testing TrackJS!');
 
